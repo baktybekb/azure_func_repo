@@ -1,0 +1,47 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  azureSubscription: 'bahaServiceConnection'  # The service connection name you created
+  functionAppName: 'bahaFunctionApp'          # The name of your function app
+  resourceGroupName: 'bahaResourceGroup'      # The name of your resource group
+  packagePath: '$(Build.ArtifactStagingDirectory)/functionapp.zip'  # The package path
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.x'
+      addToPath: true
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+    displayName: 'Install dependencies'
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: '$(System.DefaultWorkingDirectory)/function_app'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/functionapp.zip'
+      replaceExistingArchive: true
+
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription: '$(azureSubscription)'
+      appType: 'functionAppLinux'
+      appName: '$(functionAppName)'
+      package: '$(packagePath)'
+      resourceGroupName: '$(resourceGroupName)'
+
+  - task: AzureCLI@2
+    inputs:
+      azureSubscription: '$(azureSubscription)'
+      scriptType: 'bash'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        az functionapp config appsettings set --name $(functionAppName) --resource-group $(resourceGroupName) --settings FUNCTIONS_WORKER_RUNTIME=python
+        az functionapp config appsettings set --name $(functionAppName) --resource-group $(resourceGroupName) --settings AzureWebJobsStorage=$(STORAGE_CONNECTION_STRING)

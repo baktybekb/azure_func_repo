@@ -6,3 +6,6 @@ __pycache__
 
 venv/
 venv
+
+setup_azure_function.sh
+setup_azure_function.sh/

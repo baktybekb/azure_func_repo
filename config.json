@@ -1,0 +1,7 @@
+{
+  "group_patterns": [
+    "DFCI-NPI-NPC-DEV*",
+    "DFCI-NPI-ADMIN-DEV*",
+    "DFCI-NPI-DOCTOR-DEV*"
+  ]
+}

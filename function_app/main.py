@@ -8,6 +8,7 @@ def main(mytimer: func.TimerRequest) -> None:
     logging.info(f'Timer triggered function ran at {utc_timestamp}')
     logging.info('_' * 200)
     print('=' * 200)
+    print('BAHAAAAAAA')
 
 # import logging
 # import datetime

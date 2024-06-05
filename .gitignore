@@ -9,3 +9,5 @@ venv
 
 setup_azure_function.sh
 setup_azure_function.sh/
+
+.profile*

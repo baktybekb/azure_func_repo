@@ -1,4 +1,4 @@
-name: Azure Functions CI/CD
+name: Azure Function App CI/CD
 
 on:
   push:
@@ -10,25 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v2
 
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: '3.10'
 
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Archive functions
-        run: zip -r function_app.zip function_app
+      - name: Archive files
+        run: zip -r functionapp.zip .
 
-      - name: Deploy to Azure Functions
-        uses: Azure/functions-action@v1
+      - name: Deploy to Azure Function App
+        uses: azure/functions-action@v1
         with:
           app-name: 'bahaFunctionApp'
-          package: function_app.zip
+          package: '${{ github.workspace }}/functionapp.zip'
           publish-profile: ${{ secrets.AZURE_FUNCTIONAPP_PUBLISH_PROFILE }}

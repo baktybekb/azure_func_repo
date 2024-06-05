@@ -1,19 +1,19 @@
-import logging
-import datetime
-import azure.functions as func
-
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-logger = logging.getLogger(__name__)
-
-def main(mytimer: func.TimerRequest) -> None:
-    utc_timestamp = datetime.datetime.now().replace(tzinfo=datetime.timezone.utc).isoformat()
-    if mytimer.past_due:
-        logging.info('The timer is past due!')
-    logging.info('Python timer trigger function ran at %s', utc_timestamp)
-    # Your existing code logic goes here
-    print('_' * 200)
-    logger.info('=' * 200)
-    print('BAHA')
+# import logging
+# import datetime
+# import azure.functions as func
+#
+# logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+# logger = logging.getLogger(__name__)
+#
+# def main(mytimer: func.TimerRequest) -> None:
+#     utc_timestamp = datetime.datetime.now().replace(tzinfo=datetime.timezone.utc).isoformat()
+#     if mytimer.past_due:
+#         logging.info('The timer is past due!')
+#     logging.info('Python timer trigger function ran at %s', utc_timestamp)
+#     # Your existing code logic goes here
+#     print('_' * 200)
+#     logger.info('=' * 200)
+#     print('BAHA')
 
 
 # import logging
